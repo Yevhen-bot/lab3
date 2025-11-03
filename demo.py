@@ -27,6 +27,10 @@ print('Getting a client by id:')
 client4 = crepo.get_by_id('4')
 print(client4)
 
+w = wrepo.get_by_id(2)
+if w is not None:
+    print(f"{w.first_name} works in {w.store.name}")
+
 allstores = srepo.get_all()
 from random import randint
 

@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from main import views
+from rest_framework.routers import DefaultRouter
+from drf_spectacular.views import SpectacularAPIView
+
+# router = DefaultRouter()
+# router.register('stores', views.StoreViewSet, basename='store')
+# urlpatterns = router.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('stores/<int:id>/', views.StoreDetailAPIView.as_view(), name='store-detail'),
+    path('stores/', views.StoreListCreateUpdateAPIView.as_view(), name='store-list-create-update'),
 ]
