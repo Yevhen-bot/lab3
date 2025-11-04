@@ -1,5 +1,5 @@
 from main.repositories.IRepository import IRepository
-from main.models import Estimate
+from main.models import *
 
 class EstimateRepository(IRepository):
     def get_all(self):
@@ -30,8 +30,8 @@ class EstimateRepository(IRepository):
         if item==0: item = e.item
         if worker==0: worker = e.worker
 
-        e.item = item
-        e.worker = worker
+        e.item = Item.objects.filter(id=item).first()
+        e.worker = Worker.objects.filter(id=worker).first()
         e.reasoning = reasoning
         e.date = date
 

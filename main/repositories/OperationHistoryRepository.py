@@ -1,5 +1,5 @@
 from main.repositories.IRepository import IRepository
-from main.models import OperationHistory
+from main.models import *
 
 class OperationHistoryRepository(IRepository):
     def get_all(self):
@@ -35,10 +35,10 @@ class OperationHistoryRepository(IRepository):
         if operation == 0: operation = oh.operation
         if store == 0: store = oh.store
 
-        oh.client = client
-        oh.item = item
-        oh.operation = operation
-        oh.store = store
+        oh.client = Client.objects.filter(id=client).first()
+        oh.item = Item.objects.filter(id=item).first()
+        oh.operation = Operation.objects.filter(id=operation).first()
+        oh.store = Store.objects.filter(id=store).first()
         oh.date = date
         oh.price = price
         oh.info

@@ -1,5 +1,5 @@
 from main.repositories.IPersonRepository import IPersonRepository
-from main.models import Worker
+from main.models import *
 
 class WorkerRepository(IPersonRepository):
     def get_all(self):
@@ -47,8 +47,8 @@ class WorkerRepository(IPersonRepository):
         w.email = email
         w.birth_date = birth_date
         w.phone_number = phone_number
-        w.store = store
-        w.role = role
+        w.store = Store.objects.filter(id=store).first()
+        w.role = Role.objects.filter(id=role).first()
 
         w.save()
         return 1
