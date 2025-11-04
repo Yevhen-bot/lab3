@@ -37,12 +37,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites",
     'main',
+    'authentication.apps.AuthenticationConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
+
+SITE_ID = 1
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ]
 }
 
 MIDDLEWARE = [
@@ -56,6 +69,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'lab3.urls'
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 TEMPLATES = [
     {

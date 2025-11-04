@@ -6,6 +6,7 @@ from .serializers import *
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -27,6 +28,12 @@ class StoreDetailAPIView(APIView):
         return Response(ser(obj).data, status=status.HTTP_200_OK)
 
     def delete(self, request, id):
+        if not request.user.is_authenticated:
+            return Response(
+                {"detail": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        
         sr = StoreRepository()
         try:
             res = sr.delete_by_id(id)
@@ -39,6 +46,8 @@ class StoreDetailAPIView(APIView):
 
 
 class StoreListCreateUpdateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         sr = StoreRepository()
         ser = getSerializer(Store)
