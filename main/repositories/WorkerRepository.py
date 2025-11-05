@@ -19,7 +19,7 @@ class WorkerRepository(IPersonRepository):
         return Worker.objects.all().delete()
 
     def delete_by_id(self, id):
-        return Worker.objects.filter(id=id).delete()
+        return Worker.objects.filter(id=id).delete()[0]
 
     # returns created entity
     def add_one(self, first_name, last_name, email, birth_date, phone_number, store, role):

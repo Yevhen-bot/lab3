@@ -13,9 +13,8 @@ class ClientRepository(IPersonRepository):
     def get_by_phone_number(self, phone_number):
         return Client.objects.filter(phone_number=phone_number).first()
 
-    # returns (count of ALL deleted rows, dictinary of 'name' - times deleted) 
     def delete_all(self):
-        return Client.objects.all().delete()
+        return Client.objects.all().delete()[0]
 
     def delete_by_id(self, id):
         return Client.objects.filter(id=id).delete()

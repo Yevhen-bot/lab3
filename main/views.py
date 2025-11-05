@@ -44,6 +44,24 @@ class StoreDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = StoreRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('name'),
+            request.data.get('country'),
+            request.data.get('street'),
+            request.data.get('city'),
+            request.data.get('house_number')
+        )
+
+        if res > 0:
+            ser = getSerializer(Store)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class StoreListCreateUpdateAPIView(APIView):
@@ -62,28 +80,6 @@ class StoreListCreateUpdateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request):
-        sr = StoreRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('name'),
-            request.data.get('country'),
-            request.data.get('street'),
-            request.data.get('city'),
-            request.data.get('house_number')
-        )
-
-        if res > 0:
-            ser = getSerializer(Store)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         
 # ---------------------Worker-----------------------
 class WorkerDetailAPIView(APIView):
@@ -112,6 +108,26 @@ class WorkerDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = WorkerRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('last_name'),
+            request.data.get('first_name'),
+            request.data.get('email'),
+            request.data.get('birth_date'),
+            request.data.get('phone_number'),
+            request.data.get('store'),
+            request.data.get('role')
+        )
+
+        if res > 0:
+            ser = getSerializer(Worker)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class WorkerListCreateUpdateAPIView(APIView):
@@ -131,30 +147,6 @@ class WorkerListCreateUpdateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        sr = WorkerRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('last_name'),
-            request.data.get('first_name'),
-            request.data.get('email'),
-            request.data.get('birth_date'),
-            request.data.get('phone_number'),
-            request.data.get('store'),
-            request.data.get('role')
-        )
-
-        if res > 0:
-            ser = getSerializer(Worker)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
 # ---------------------Role-----------------------
 class RoleDetailAPIView(APIView):
     def get(self, request, id):
@@ -182,6 +174,20 @@ class RoleDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = RoleRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('role')
+        )
+
+        if res > 0:
+            ser = getSerializer(Role)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class RoleListCreateUpdateAPIView(APIView):
@@ -201,24 +207,6 @@ class RoleListCreateUpdateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        sr = RoleRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('role')
-        )
-
-        if res > 0:
-            ser = getSerializer(Role)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
 # ---------------------Operation-----------------------
 class OperationDetailAPIView(APIView):
     def get(self, request, id):
@@ -246,6 +234,20 @@ class OperationDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = OperationRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('operation')
+        )
+
+        if res > 0:
+            ser = getSerializer(Operation)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class OperationListCreateUpdateAPIView(APIView):
@@ -265,24 +267,6 @@ class OperationListCreateUpdateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        sr = OperationRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('operation')
-        )
-
-        if res > 0:
-            ser = getSerializer(Operation)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
 # ---------------------Client-----------------------
 class ClientDetailAPIView(APIView):
     def get(self, request, id):
@@ -310,6 +294,24 @@ class ClientDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = ClientRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('last_name'),
+            request.data.get('first_name'),
+            request.data.get('email'),
+            request.data.get('birth_date'),
+            request.data.get('phone_number')
+        )
+
+        if res > 0:
+            ser = getSerializer(Client)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ClientListCreateUpdateAPIView(APIView):
@@ -329,28 +331,6 @@ class ClientListCreateUpdateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        sr = ClientRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('last_name'),
-            request.data.get('first_name'),
-            request.data.get('email'),
-            request.data.get('birth_date'),
-            request.data.get('phone_number')
-        )
-
-        if res > 0:
-            ser = getSerializer(Client)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
 # ---------------------Item-----------------------
 class ItemDetailAPIView(APIView):
     def get(self, request, id):
@@ -378,6 +358,21 @@ class ItemDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = ItemRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('description'),
+            request.data.get('name')
+        )
+
+        if res > 0:
+            ser = getSerializer(Item)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ItemListCreateUpdateAPIView(APIView):
@@ -397,25 +392,6 @@ class ItemListCreateUpdateAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request):
-        sr = ItemRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('description'),
-            request.data.get('name')
-        )
-
-        if res > 0:
-            ser = getSerializer(Item)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
 # ---------------------Estimate-----------------------
 class EstimateDetailAPIView(APIView):
     def get(self, request, id):
@@ -443,6 +419,23 @@ class EstimateDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = EstimateRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('item'),
+            request.data.get('worker'),
+            request.data.get('reasoning'),
+            request.data.get('date'),
+        )
+
+        if res > 0:
+            ser = getSerializer(Estimate)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class EstimateListCreateUpdateAPIView(APIView):
@@ -461,27 +454,6 @@ class EstimateListCreateUpdateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request):
-        sr = EstimateRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('item'),
-            request.data.get('worker'),
-            request.data.get('reasoning'),
-            request.data.get('date'),
-        )
-
-        if res > 0:
-            ser = getSerializer(Estimate)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         
 # ---------------------OperationHistory-----------------------
 class OperationHistoryDetailAPIView(APIView):
@@ -510,6 +482,26 @@ class OperationHistoryDetailAPIView(APIView):
         if res == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, id):
+        sr = OperationHistoryRepository()
+        res = sr.update_by_id(
+            id,
+            request.data.get('client'),
+            request.data.get('item'),
+            request.data.get('operation'),
+            request.data.get('store'),
+            request.data.get('date'),
+            request.data.get('price'),
+            request.data.get('info')
+        )
+
+        if res > 0:
+            ser = getSerializer(OperationHistory)
+            serializer = ser(sr.get_by_id(id))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class OperationHistoryListCreateUpdateAPIView(APIView):
@@ -528,27 +520,3 @@ class OperationHistoryListCreateUpdateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request):
-        sr = OperationHistoryRepository()
-        id = request.data.get('id')
-        if not id:
-            return Response({"Error": "ID is required for update"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        res = sr.update_by_id(
-            id,
-            request.data.get('client'),
-            request.data.get('item'),
-            request.data.get('operation'),
-            request.data.get('store'),
-            request.data.get('date'),
-            request.data.get('price'),
-            request.data.get('info')
-        )
-
-        if res > 0:
-            ser = getSerializer(OperationHistory)
-            serializer = ser(sr.get_by_id(id))
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_404_NOT_FOUND)

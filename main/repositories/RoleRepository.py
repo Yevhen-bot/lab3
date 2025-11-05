@@ -12,7 +12,7 @@ class RoleRepository(IRepository):
         return Role.objects.all().delete()
 
     def delete_by_id(self, id):
-        return Role.objects.filter(id=id).delete()
+        return Role.objects.filter(id=id).delete()[0]
 
     def add_one(self, role):
         return Role.objects.create(

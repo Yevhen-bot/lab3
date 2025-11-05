@@ -12,7 +12,7 @@ class EstimateRepository(IRepository):
         return Estimate.objects.all().delete()
 
     def delete_by_id(self, id):
-        return Estimate.objects.filter(id=id).delete()
+        return Estimate.objects.filter(id=id).delete()[0]
 
     def add_one(self, item, worker, reasoning, date):
         return Estimate.objects.create(

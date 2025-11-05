@@ -13,7 +13,7 @@ class StoreRepository(IRepository):
         return Store.objects.all().delete()
 
     def delete_by_id(self, id):
-        return Store.objects.filter(id=id).delete()
+        return Store.objects.filter(id=id).delete()[0]
 
     # returns created entity
     def add_one(self, name, country, street, city, house_number):

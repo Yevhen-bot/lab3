@@ -12,7 +12,7 @@ class ItemRepository(IRepository):
         return Item.objects.all().delete()
 
     def delete_by_id(self, id):
-        return Item.objects.filter(id=id).delete()
+        return Item.objects.filter(id=id).delete()[0]
 
     def add_one(self, description, name):
         return Item.objects.create(

@@ -12,7 +12,7 @@ class OperationHistoryRepository(IRepository):
         return OperationHistory.objects.all().delete()
 
     def delete_by_id(self, id):
-        return OperationHistory.objects.filter(id=id).delete()
+        return OperationHistory.objects.filter(id=id).delete()[0]
 
     def add_one(self, client, item, operation, store, date, price, info):
         return OperationHistory.objects.create(

@@ -12,7 +12,7 @@ class OperationRepository(IRepository):
         return Operation.objects.all().delete()
 
     def delete_by_id(self, id):
-        return Operation.objects.filter(id=id).delete()
+        return Operation.objects.filter(id=id).delete()[0]
 
     def add_one(self, operation):
         return Operation.objects.create(
